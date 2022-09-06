@@ -1,0 +1,17 @@
+.env
+env
+accounts/__pycache__/*
+customers/__pycache__/*
+marketplace/__pycache__/*
+media/__pycache__/*
+menu/__pycache__/*
+orders/__pycache__/*
+vendor/__pycache__/*
+accounts/migrations/*
+customers/migrations/*
+marketplace/migrations/*
+media/migrations/*
+menu/migrations/*
+orders/migrations/*
+vendor/migrations/*
+
