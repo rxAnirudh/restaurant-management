@@ -1,7 +1,5 @@
 from datetime import datetime
 from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import message
-from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
 from django.utils.http import urlsafe_base64_decode
 
@@ -9,7 +7,7 @@ from vendor.forms import VendorForm
 from .forms import UserForm
 from .models import User, UserProfile
 from django.contrib import messages, auth
-from .utils import detectUser, send_verification_email
+from .utils import detectUser, EmailManager
 from django.contrib.auth.decorators import login_required, user_passes_test
 
 from django.core.exceptions import PermissionDenied
@@ -42,14 +40,6 @@ def registerUser(request):
     elif request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid():
-            # Create the user using the form
-            # password = form.cleaned_data['password']
-            # user = form.save(commit=False)
-            # user.set_password(password)
-            # user.role = User.CUSTOMER
-            # user.save()
-
-            # Create the user using create_user method
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
             username = form.cleaned_data['username']
@@ -62,7 +52,7 @@ def registerUser(request):
             # Send verification email
             mail_subject = 'Please activate your account'
             email_template = 'accounts/emails/account_verification_email.html'
-            send_verification_email(request, user, mail_subject, email_template)
+            EmailManager().send_verification_email(request, user, mail_subject, email_template)
             messages.success(request, 'Your account has been registered sucessfully!')
             return redirect('registerUser')
         else:
@@ -92,7 +82,7 @@ def registerVendor(request):
             password = form.cleaned_data['password']
             user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
             user.role = User.VENDOR
-            user.save()
+            user.save() 
             vendor = v_form.save(commit=False)
             vendor.user = user
             vendor_name = v_form.cleaned_data['vendor_name']
@@ -104,7 +94,7 @@ def registerVendor(request):
             # Send verification email
             mail_subject = 'Please activate your account'
             email_template = 'accounts/emails/account_verification_email.html'
-            send_verification_email(request, user, mail_subject, email_template)
+            # send_verification_email(request, user, mail_subject, email_template)
 
             messages.success(request, 'Your account has been registered sucessfully! Please wait for the approval.')
             return redirect('registerVendor')
@@ -225,7 +215,7 @@ def forgot_password(request):
             # send reset password email
             mail_subject = 'Reset Your Password'
             email_template = 'accounts/emails/reset_password_email.html'
-            send_verification_email(request, user, mail_subject, email_template)
+            EmailManager().send_verification_email(request, user, mail_subject, email_template)
 
             messages.success(request, 'Password reset link has been sent to your email address.')
             return redirect('login')

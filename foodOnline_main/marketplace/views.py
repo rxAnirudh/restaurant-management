@@ -26,6 +26,7 @@ def marketplace(request):
         'vendors': vendors,
         'vendor_count': vendor_count,
     }
+    print(f"vendors {vendors}")
     return render(request, 'marketplace/listings.html', context)
 
 

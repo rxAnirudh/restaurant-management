@@ -70,8 +70,6 @@ class Order(models.Model):
         if self.total_data:
             total_data = json.loads(self.total_data)
             data = total_data.get(str(vendor.id))
-            
-            
             for key, val in data.items():
                 subtotal += float(key)
                 val = val.replace("'", '"')
@@ -87,9 +85,8 @@ class Order(models.Model):
         context = {
             'subtotal': subtotal,
             'tax_dict': tax_dict, 
-            'grand_total': grand_total,
+            'grand_total': 23,
         }
-
         return context
 
     def __str__(self):
