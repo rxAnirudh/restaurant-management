@@ -85,7 +85,7 @@ class Order(models.Model):
         context = {
             'subtotal': subtotal,
             'tax_dict': tax_dict, 
-            'grand_total': 23,
+            'grand_total': grand_total,
         }
         return context
 

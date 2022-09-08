@@ -3,6 +3,8 @@ import os
 from django import conf
 from django.contrib.messages import constants as messages
 
+from foodOnline_main.config import Config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-k!hzz%mgt@boqjx$)ce&5d=+10o#+)g=+5*ejvg0q*e+gt&3!q'
+SECRET_KEY = Config.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -145,7 +147,7 @@ MESSAGE_TAGS = {
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'anirudh.chawla@radixweb.com'
 
-GOOGLE_API_KEY = ''
+GOOGLE_API_KEY = Config.GOOGLE_API_KEY
 
 if DEBUG == True:
     # os.environ['PATH'] = os.path.join(BASE_DIR, 'env\Lib\site-packages\osgeo') + ';' + os.environ['PATH']
@@ -154,19 +156,19 @@ if DEBUG == True:
     GDAL_LIBRARY_PATH = '/usr/local/lib/libgdal.dylib'
     GEOS_LIBRARY_PATH = '/usr/local/lib/libgeos_c.dylib'
 
-PAYPAL_CLIENT_ID = ''
+PAYPAL_CLIENT_ID = Config.PAYPAL_CLIENT_ID
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = 'same-origin-allow-popups'
 
-RZP_KEY_ID = ''
-RZP_KEY_SECRET = ''
+RZP_KEY_ID = Config.RZP_KEY_ID
+RZP_KEY_SECRET = Config.RZP_KEY_SECRET
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'online_food_course_database',
-        'USER': 'anirudh.chawla',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': Config.DB_NAME,
+        'USER': Config.DB_USER,
+        'PASSWORD': Config.DB_PASSWORD,
+        'HOST': Config.DB_HOST,
     }
 }

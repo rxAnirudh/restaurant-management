@@ -1,4 +1,4 @@
-.env
+.env.dev
 env
 accounts/__pycache__/*
 customers/__pycache__/*
@@ -14,4 +14,3 @@ media/migrations/*
 menu/migrations/*
 orders/migrations/*
 vendor/migrations/*
-

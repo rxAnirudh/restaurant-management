@@ -16,7 +16,7 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 
-client = razorpay.Client(auth=('', ''))
+client = razorpay.Client(auth=(RZP_KEY_ID, RZP_KEY_SECRET))
 
 
 
@@ -100,6 +100,7 @@ def place_order(request):
                     "key2": "value2"
                 }
             }
+            
             rzp_order = client.order.create(data=DATA)
             rzp_order_id = rzp_order['id']
 
@@ -173,7 +174,7 @@ def payments(request):
             'customer_subtotal': customer_subtotal,
             'tax_data': tax_data,
         }
-        send_notification(mail_subject, mail_template, context)
+        # send_notification(mail_subject, mail_template, context)
         
 
         # SEND ORDER RECEIVED EMAIL TO THE VENDOR
@@ -196,7 +197,7 @@ def payments(request):
                     'tax_data': order_total_by_vendor(order, i.fooditem.vendor.id)['tax_dict'],
                     'vendor_grand_total': order_total_by_vendor(order, i.fooditem.vendor.id)['grand_total'],
                 }
-                send_notification(mail_subject, mail_template, context)
+                # send_notification(mail_subject, mail_template, context)
 
         # CLEAR THE CART IF THE PAYMENT IS SUCCESS
         # cart_items.delete() 
